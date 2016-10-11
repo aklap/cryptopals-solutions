@@ -20,7 +20,7 @@ def freqDecode(ciphertext):
             result += (chr(xbyte))
         results.append(''.join(result))
 
-# examine the frequencies of results to find best scoring match
+    # examine the frequencies of results to find best scoring match
     for i, result in enumerate(results):
         if frequencies.score(result) > highest_score:
             highest_score = frequencies.score(result)
