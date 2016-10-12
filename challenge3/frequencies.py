@@ -1,7 +1,7 @@
 import string
 
 #most common letters (single)
-common_letters = ['E', 'T', 'A', 'O', 'I', 'N', 'S', 'H', 'R', 'D', 'L', 'U']
+common_letters = ['e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'u']
 
 # most common double letters
 common_doubles = ["ss", "ee", "tt", "ff", "ll", "mm", "oo"]
