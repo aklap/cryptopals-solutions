@@ -1,7 +1,5 @@
 import sys
-import string
 import frequencies
-import binascii
 from solution3 import freqDecode
 
 # save all the high scores and then get the max score to find winning string
