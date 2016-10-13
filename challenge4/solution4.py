@@ -7,7 +7,7 @@ from solution3 import freqDecode
 # save all the high scores and then get the max score to find winning string
 
 def decrypt(file):
-    with open(str(file), "rb") as f, open("result", "a") as g:
+    with open(str(file), "rb") as f:
 
         while True:
             results = []
@@ -26,6 +26,5 @@ def decrypt(file):
             if not f.read(1):
                 break
     f.close()
-    g.close()
 
 decrypt("4.txt")
