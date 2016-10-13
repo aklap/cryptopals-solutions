@@ -1,7 +1,34 @@
 import string
 
 #most common letters (single)
-common_letters = ['e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'u']
+letter_frequencies = {
+    'A':  8.55,                
+    'B':  1.60,               
+    'C':  3.16,               
+    'D':  3.87,               
+    'E': 12.10,             
+    'F':  2.18,            
+    'G':  2.09,                    
+    'H':  4.96,                      
+    'I':  7.33,                        
+    'J':  0.22,        
+    'K':  0.81,        
+    'L':  4.21,       
+    'M':  2.53,        
+    'N':  7.17,        
+    'O':  7.47,        
+    'P':  2.07,        
+    'Q':  0.10,                 
+    'R':  6.33,                 
+    'S':  6.73,                 
+    'T':  8.94,  
+    'U':  2.68,
+    'V': 1.06,
+    'W':  1.83,
+    'X':  0.19,
+    'Y':  1.72,
+    'Z':  0.11   
+}
 
 # most common double letters
 common_doubles = ["ss", "ee", "tt", "ff", "ll", "mm", "oo"]
@@ -21,23 +48,26 @@ trigrams = ['the', 'and', 'tha', 'ent', 'ion', 'tio', 'for', 'nde', 'has', 'nce'
 # most frequent initial letters in a word
 common_initials = ['T', 'O', 'A', 'W', 'B', 'C', 'D', 'S', 'F', 'M', 'R', 'H', 'I', 'Y', 'E', 'G', 'L', 'N', 'P', 'U', 'J', 'K']
 
-def score(string):
+def score(result):
     score = 0
-    words = string.split()
+    words = result[1].split()
     
     for word in words:
+        for letter in letter_frequencies:
+            if letter.lower() in word:
+                score += letter_frequencies[letter]
         if word[0] in common_initials:
-            score += 2
+            score += 20
         for double in common_doubles:
             if double in word:
-                score +=2
+                score +=20
         for pair in common_pairs:
             if pair in word:
-                score +=2
+                score +=20
         for pair_word in common_pair_words:
             if pair_word in word:
-                score +=2
+                score +=20
         for trigram in trigrams:
             if trigram in word:
-                score +=2
+                score +=20
     return score
