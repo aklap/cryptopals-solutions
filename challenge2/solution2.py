@@ -6,26 +6,19 @@ def getXOR(file1, file2):
         xor_result = [];
 
         while True:
-            abyte = a.read(1)
-            bbyte = b.read(1)
+            a_byte = a.read(1)
+            b_byte = b.read(1)
 
-            if toDecimal(abyte) != 'empty':
-                xbyte = toDecimal(abyte)^toDecimal(bbyte)
+            if a_byte.decode('ascii') != '':
+                xbyte = ord(a_byte)^ord(b_byte)
                 res_byte = format(xbyte, 'x')
                 xor_result.append(res_byte)
 
-            if not abyte:
+            if not a_byte:
                 break
-
-        print("The XOR result is:", "".join(xor_result))
-
     a.close()
     b.close()
-
-def toDecimal(hex):
-    if hex.decode('ascii') == "":
-        return 'empty'
-    else:
-        return int(hex, 16)
+   
+    print("The XOR result is:", "".join(xor_result))
 
 getXOR("./buffer1.txt", "./buffer2.txt")
