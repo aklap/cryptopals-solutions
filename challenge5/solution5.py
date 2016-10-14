@@ -16,7 +16,10 @@ def decode(plaintext, string):
         
         ciphertext.append(formatted_xbyte)
         key.rotate()
+        
+    ciphertext_to_string = ''.join(ciphertext)    
 
-    print(''.join(ciphertext) == expected)
+    if ciphertext_to_string == expected:
+        print(ciphertext_to_string)
 
 decode("Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal", 'ICE')
