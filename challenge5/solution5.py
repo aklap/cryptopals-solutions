@@ -8,11 +8,11 @@ def encrypt(plaintext, string):
     ciphertext = []
 
     for byte in plaintext:
-        xbyte = byte ^ ord(key.chars[0])
-        if len(xbyte) < 4:
-            formatted_xbyte = hex(xbyte).replace('0x', '0')
+        hexxed_xbyte = hex(byte^ord(key.chars[0]))
+        if len(hexxed_xbyte) < 4:
+            formatted_xbyte = hexxed_xbyte.replace('0x', '0')
         else:
-            formatted_xbyte = hex(xbyte)[2:]
+            formatted_xbyte = hexxed_xbyte[2:]
         
         ciphertext.append(formatted_xbyte)
         key.rotate()
