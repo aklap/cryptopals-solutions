@@ -2,7 +2,7 @@ import string
 import frequencies
 import binascii
 
-def freqDecode(ciphertext):
+def freq_decode(ciphertext):
     results = []
     highest_score = 0 
     winner = ''
@@ -27,8 +27,3 @@ def freqDecode(ciphertext):
             winner = possible_keys[i][0]
             plaintext = results[i][1]
     return (highest_score, winner, plaintext)
-    # print(f'The highest score is {highest_score}')
-    # print(f'Therefore the correct key is: {winner}')
-    # print(f'The plaintext is: {plaintext}')
-
-# freqDecode('1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736')
