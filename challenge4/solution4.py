@@ -1,6 +1,6 @@
 import sys
 import frequencies
-from solution3 import freqDecode
+from solution3 import freq_decode
 
 # save all the high scores and then get the max score to find winning string
 
@@ -12,7 +12,7 @@ def decrypt(file):
 
             # readline() caused unhexlify() in solution3 file to throw oddlength error
             for line in f:
-                result = freqDecode(line.strip())
+                result = freq_decode(line.strip())
                 results.append(result)
 
             winner = max(results, key=lambda result: result[0])

@@ -2,7 +2,7 @@ import string
 import frequencies
 import binascii
 
-def freqDecode(ciphertext):
+def freq_decode(ciphertext):
     results = []
     highest_score = 0 
     winner = ''
