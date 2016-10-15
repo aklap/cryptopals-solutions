@@ -29,4 +29,4 @@ def freq_decode(ciphertext):
     print(f'Therefore the correct key is: {winner}')
     print(f'The plaintext is: {plaintext}')
 
-freq_decode('1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736')
+
