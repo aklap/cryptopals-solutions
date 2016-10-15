@@ -19,5 +19,6 @@ def getXOR(file1, file2):
     a.close()
     b.close()
    
-    print("The XOR result is:", "".join(xor_result))
+    return "".join(xor_result)
+
 
