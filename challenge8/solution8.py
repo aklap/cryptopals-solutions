@@ -30,4 +30,3 @@ def find_plaintext(file):
                 # TODO: decrypt the ECB string
             break
     f.close()
-find_plaintext('ciphertext.txt')
