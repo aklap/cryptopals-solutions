@@ -21,8 +21,9 @@ def decrypt(file):
             print(f'The key was: {winner[1]}')
             print(f'The plaintext is: {winner[2]}')
 
+            return (winner)
+
             if not f.read(1):
                 break
     f.close()
 
-decrypt("4.txt")
