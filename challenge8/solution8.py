@@ -16,6 +16,7 @@ def find_plaintext(file):
 
                 #break each line into 16 byte (128 bit) chunks, must be a multiple of 16 bc of ECB
                 chunks = to_chunks(line, 16)
+                
                 #create a set of *unique elements* based on that collection
                 unique_chunks = set(chunks)
 
@@ -26,7 +27,7 @@ def find_plaintext(file):
                 if duplicates > 0:
                     ECB_line = (i, chunks)
                     print(f'The ECB encrypted line is line no. {i}:\n\n{chunks}')
-                    
+                    return (i, chunks)
                 # TODO: decrypt the ECB string
             break
     f.close()
