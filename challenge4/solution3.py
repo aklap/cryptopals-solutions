@@ -7,7 +7,8 @@ def freq_decode(ciphertext):
     highest_score = 0 
     winner = ''
     plaintext = ''
-    # decode from ascii to bytes
+    
+    #convert to bytes
     ciphertext = binascii.unhexlify(ciphertext)
     possible_keys = list(string.ascii_lowercase + string.ascii_uppercase + string.digits)
 
