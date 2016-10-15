@@ -26,6 +26,8 @@ def find_plaintext(file):
                 if duplicates > 0:
                     ECB_line = (i, chunks)
                     print(f'The ECB encrypted line is line no. {i}:\n\n{chunks}')
+                    
+                # TODO: decrypt the ECB string
             break
     f.close()
 find_plaintext('ciphertext.txt')
