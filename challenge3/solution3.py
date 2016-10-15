@@ -25,10 +25,8 @@ def freq_decode(ciphertext):
         if frequencies.score(result) > highest_score:
             highest_score = frequencies.score(result)
             winner = possible_keys[i]
-            plaintext = results[i]
-    print(f'The highest score is {highest_score}')
-    print(f'Therefore the correct key is: {winner}')
-    print(f'The plaintext is: {plaintext}')
+            plaintext = results[i][1]
+            
     return (highest_score, winner, plaintext)
 
 
