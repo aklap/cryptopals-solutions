@@ -21,4 +21,3 @@ def getXOR(file1, file2):
    
     print("The XOR result is:", "".join(xor_result))
 
-getXOR("./buffer1.txt", "./buffer2.txt")
