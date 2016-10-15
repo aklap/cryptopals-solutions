@@ -19,6 +19,7 @@ def freq_decode(ciphertext):
             xbyte = (byte^ord(key))
             result += (chr(xbyte))
         results.append((key, result))
+
     # examine the frequencies of results to find best scoring match
     for i, result in enumerate(results):
         if frequencies.score(result) > highest_score:
@@ -28,5 +29,6 @@ def freq_decode(ciphertext):
     print(f'The highest score is {highest_score}')
     print(f'Therefore the correct key is: {winner}')
     print(f'The plaintext is: {plaintext}')
+    return (highest_score, winner, plaintext)
 
 
