@@ -41,8 +41,11 @@ def break_xor(filename):
             if len(''.join(kstring)) > 1 and score(''.join(kstring)) > max_key_score:
                 max_key_score = score(''.join(kstring))
                 key = ''.join(kstring)
-            
-            #             
+        
+        print(key)
+        #TODO: decrypt ciphertext
+        # print(decrypt(ciphertext, key))
+
 def normalize(pair, k):
     distance = hamming(pair[0].decode(), pair[1].decode())
     return distance/k
