@@ -10,7 +10,7 @@ def decrypt(file):
         while True:
             results = []
 
-            # readline() caused unhexlify() in solution3 file to throw oddlength error
+            # readline() caused unhexlify() in solution3 file to throw odd length error
             for line in f:
                 result = freq_decode(line.strip())
                 results.append(result)
@@ -21,8 +21,9 @@ def decrypt(file):
             print(f'The key was: {winner[1]}')
             print(f'The plaintext is: {winner[2]}')
 
+            return (winner)
+
             if not f.read(1):
                 break
     f.close()
 
-decrypt("4.txt")

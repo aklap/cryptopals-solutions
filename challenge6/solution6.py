@@ -1,66 +1,66 @@
 
-def get_hamming(first_n, second_n):
-    KEYSIZE = range(2,15)
-    first_n = bytearray(first_n, 'utf-8')
-    second_n = bytearray(second_n, 'utf-8')
-    distances = []
-    lowest = []
+from functools import reduce
+import base64
+import sys
+sys.path.append('../challenge3')
+from solution3 import freq_decode
+from frequencies_6 import score
 
-    # split byte array into chunks of KEYSIZE
-    for n in KEYSIZE:
-        first_chunks = getChunks(first_n, n)
-        second_chunks = getChunks(second_n, n)
-        print(f'The key is {n}')
+def break_xor(filename):
+    with open(str(filename), "rb") as f:
+        # decode from base64
+        ciphertext = base64.b64decode(f.read())
+        KEYSIZE = range(1,40)
+        distances = []
+        key = ''
+        max_key_score = 0
+
+        for k in KEYSIZE:
+        # normalize hamming distances, get average distance of the first 4 chunks
+            pair = to_chunks(ciphertext, k)[0:2]
+            normalized_distance = normalize(pair, k)
+            distances.append((k, normalized_distance))
+
+        distances = sorted(distances, key=lambda dist: dist[1])
+
+        for tup in distances:
+            key_n = tup[0]
+            kstring = []
+
+            ciphertext_blocks = to_chunks(ciphertext, key_n)
         
-        for i, chunk in enumerate(first_chunks):
-            hammings = []
+            # transpose all the blocks
+            transposed = []
+            for i in range(0, key_n):
+                transposed.append(([block[i:i+1] for index, block in enumerate(ciphertext_blocks)]))
 
-            if i < 1:
-                for index, num in enumerate(chunk):
-                    first_byte = num
-                    second_byte = second_chunks[i][index]
-                    # xor the bits in each byte, returning everthing after the binary prefix of 0b as a string
-                    xbyte = bin(first_byte ^ second_byte)[2:]
-                    # count the differences by counting the occurrences of the 1 add onto count
-                    hamming_distance = xbyte.count('1')
-                    hammings.append(hamming_distance)
-                avg = hamming_average(hammings, n)
+            #break as if single character XOR to get each char of the key string
+            for block in transposed:
+                kstring.append(freq_decode(reduce(lambda a,b: a+b, block))[1])
+            # show all the possible key strings for each keysize length, sorted lowest to highest hamming distances
+            if len(''.join(kstring)) > 1 and score(''.join(kstring)) > max_key_score:
+                max_key_score = score(''.join(kstring))
+                key = ''.join(kstring)
+        
+        print(key)
+        #TODO: decrypt ciphertext
+        # print(decrypt(ciphertext, key))
 
-                if not lowest or avg < lowest[1]:
-                    lowest = [n, avg]
+def normalize(pair, k):
+    distance = hamming(pair[0].decode(), pair[1].decode())
+    return distance/k
 
-        print(f'lowest keysize is {lowest}')
-        print('--------------------------------\n')
+def hamming(string1, string2):
+    distances = []
 
+    for i, char in enumerate(string1):
+        xbyte = bin(ord(char)^ord(string2[i]))
+        distances.append(xbyte.count('1'))
+    return (reduce(lambda a,b: a+b, distances))
 
-    chunks = getChunks(first_n, lowest[0])+ getChunks(second_n, lowest[0])
-    transposed = transpose(chunks)
-    print(f'XORed: {getXOR(transposed)}')
-
-
-def hamming_average(hammings, n):
-    total = 0
-    for n in hammings:
-        total +=n
-    return total/n
-
-def getChunks(bytes, n):
+def to_chunks(string, k):
     start = 0
-    return [bytes[i:i + n] for i in range(0, len(bytes), n)]
+    # gets chunks of n-sized blocks
+    return [string[i:i+k] for i in range(0, len(string), k)]
 
-def transpose(chunks):
-    result0 = []
-    result1 = []
-    for i, chunk in enumerate(chunks):
-        result0.append(chunk[0])
-        result1.append(chunk[1])
-    return [result1, result0]
-
-def getXOR(transposed):
-    xbytes = []
-    for i, byte in enumerate(transposed[0]):
-        xbyte = bin(transposed[0][i] ^ transposed[1][i])
-        xbytes.append(xbyte)
-    return xbytes
-
-get_hamming('this is a test', 'wokka wokka!!!')
+break_xor('ciphertext.txt')

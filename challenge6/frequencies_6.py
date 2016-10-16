@@ -50,7 +50,7 @@ common_initials = ['T', 'O', 'A', 'W', 'B', 'C', 'D', 'S', 'F', 'M', 'R', 'H', '
 
 def score(result):
     score = 0
-    words = result[1].split()
+    words = result.split()
     
     for word in words:
         for letter in letter_frequencies:

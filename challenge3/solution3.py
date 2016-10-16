@@ -7,14 +7,13 @@ def freq_decode(ciphertext):
     highest_score = 0 
     winner = ''
     plaintext = ''
-    # decode from ascii to bytes
-    ciphertext = binascii.unhexlify(ciphertext)
-    possible_keys = list(string.ascii_lowercase + string.ascii_uppercase + string.digits)
+    # decode to bytes
+    # ciphertext = binascii.unhexlify(ciphertext)
+    possible_keys = [chr(i) for i in range(0,256)]
 
     # XOR the decoded bytes to get results for every possible key
     for key in possible_keys:
         result = ''
-
         for byte in ciphertext:
             xbyte = (byte^ord(key))
             result += (chr(xbyte))
@@ -24,9 +23,8 @@ def freq_decode(ciphertext):
         if frequencies.score(result) > highest_score:
             highest_score = frequencies.score(result)
             winner = possible_keys[i]
-            plaintext = results[i]
-    print(f'The highest score is {highest_score}')
-    print(f'Therefore the correct key is: {winner}')
-    print(f'The plaintext is: {plaintext}')
+            plaintext = results[i][1]
+            
+    return (highest_score, winner, plaintext)
 
-freq_decode('1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736')
+
