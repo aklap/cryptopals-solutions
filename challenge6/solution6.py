@@ -4,6 +4,7 @@ import base64
 import sys
 sys.path.append('../challenge3')
 from solution3 import freq_decode
+from frequencies_6 import score
 
 def break_xor(filename):
     with open(str(filename), "rb") as f:
