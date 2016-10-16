@@ -9,17 +9,15 @@ def freq_decode(ciphertext):
     plaintext = ''
     # decode to bytes
     # ciphertext = binascii.unhexlify(ciphertext)
-    possible_keys = list(string.ascii_lowercase + string.ascii_uppercase + string.digits)
+    possible_keys = [chr(i) for i in range(0,256)]
 
     # XOR the decoded bytes to get results for every possible key
     for key in possible_keys:
         result = ''
-
         for byte in ciphertext:
             xbyte = (byte^ord(key))
             result += (chr(xbyte))
         results.append((key, result))
-
     # examine the frequencies of results to find best scoring match
     for i, result in enumerate(results):
         if frequencies.score(result) > highest_score:
