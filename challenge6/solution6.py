@@ -12,10 +12,10 @@ def break_xor(filename):
         ciphertext = base64.b64decode(f.read())
         KEYSIZE = range(1,40)
         distances = []
+        key = ''
+        max_key_score = 0
 
         for k in KEYSIZE:
-            print(f'For key {k}')
-
         # normalize hamming distances, get average distance of the first 4 chunks
             pair = to_chunks(ciphertext, k)[0:2]
             normalized_distance = normalize(pair, k)
@@ -25,8 +25,7 @@ def break_xor(filename):
 
         for tup in distances:
             key_n = tup[0]
-            print(key_n)
-            key_string = []
+            kstring = []
 
             ciphertext_blocks = to_chunks(ciphertext, key_n)
         
@@ -37,10 +36,13 @@ def break_xor(filename):
 
             #break as if single character XOR to get each char of the key string
             for block in transposed:
-                key_string.append(freq_decode(reduce(lambda a,b: a+b, block))[1])
+                kstring.append(freq_decode(reduce(lambda a,b: a+b, block))[1])
             # show all the possible key strings for each keysize length, sorted lowest to highest hamming distances
-            print(''.join(key_string))
-
+            if len(''.join(kstring)) > 1 and score(''.join(kstring)) > max_key_score:
+                max_key_score = score(''.join(kstring))
+                key = ''.join(kstring)
+            
+            #             
 def normalize(pair, k):
     distance = hamming(pair[0].decode(), pair[1].decode())
     return distance/k
