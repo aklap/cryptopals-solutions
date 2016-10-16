@@ -1,6 +1,6 @@
 import string
 
-#most common letters (single)
+# most common letters (single)
 letter_frequencies = {
     'A':  8.55,                
     'B':  1.60,               
