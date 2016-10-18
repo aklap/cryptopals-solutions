@@ -4,18 +4,20 @@ from constants import POSSIBLE_KEYS as KEYS
 
 # XOR the decoded bytes to get results for every possible key, use letter frequency to find likely match
 
-def xor_ciphertext(ciphertext):
+def xor_bytes(text):
     results = []
     for key in KEYS:
-        result = [chr(byte^ord(key)) for byte in ciphertext]
+        result = [chr(byte^ord(key)) for byte in text]
         results.append(result)
     return results
 
 def decrypt_xor(ciphertext):
-    decoded_text = binascii.unhexlify(ciphertext)
-    xor_results = xor_ciphertext(decoded_text)
-    match = find_match(xor_results)
-    best_key = KEYS[match[1]]
-    score = match[0]
-    plaintext = match[2]
-    return (score, best_key, plaintext)
+    try:
+        ciphertext = binascii.unhexlify(ciphertext)
+    finally:
+        xor_results = xor_bytes(ciphertext)
+        match = find_match(xor_results)
+        best_key = KEYS[match[1]]
+        score = match[0]
+        plaintext = match[2]
+        return (score, best_key, plaintext)
