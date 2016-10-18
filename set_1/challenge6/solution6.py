@@ -1,66 +1,46 @@
-
-from functools import reduce
-import base64
 import sys
+import base64
+from keys import KEYSIZE
+from functools import reduce
 sys.path.append('../challenge3')
-from solution3 import freq_decode
-from frequencies_6 import score
+from solution3 import decrypt_xor
+from frequencies import score
+sys.path.append('../challenge5')
+from solution5 import xor_encrypt as to_plaintext
+from distance_functions import *
+from transform_functions import *
 
-def break_xor(filename):
+def break_repeating(filename):
     with open(str(filename), "rb") as f:
-        # decode from base64
         ciphertext = base64.b64decode(f.read())
-        KEYSIZE = range(1,40)
         distances = []
         key = ''
         max_key_score = 0
 
-        for k in KEYSIZE:
-        # normalize hamming distances, get average distance of the first 4 chunks
-            pair = to_chunks(ciphertext, k)[0:2]
-            normalized_distance = normalize(pair, k)
-            distances.append((k, normalized_distance))
+        for k_size in KEYSIZE:
+        # normalize hamming distances, get average distance of the first 2 chunks
+            pair = to_chunks(ciphertext, k_size)[0:2]
+            normalized_distance = normalize(pair, k_size)
+            distances.append((k_size, normalized_distance))
 
+        # sort the distances tuples by lowest to highest distance
         distances = sorted(distances, key=lambda dist: dist[1])
 
-        for tup in distances:
-            key_n = tup[0]
-            kstring = []
+        for dist in distances:
+            k_length = dist[0]
+            cipher_key = []
 
-            ciphertext_blocks = to_chunks(ciphertext, key_n)
-        
             # transpose all the blocks
-            transposed = []
-            for i in range(0, key_n):
-                transposed.append(([block[i:i+1] for index, block in enumerate(ciphertext_blocks)]))
-
-            #break as if single character XOR to get each char of the key string
+            ciphertext_blocks = to_chunks(ciphertext, k_length)
+            transposed = transpose(ciphertext_blocks, k_length)
+            
+            # break as if single character XOR to get each char of the key string
             for block in transposed:
-                kstring.append(freq_decode(reduce(lambda a,b: a+b, block))[1])
+                cipher_key.append(decrypt_xor(reduce(lambda a,b: a+b, block))[1])
+
             # show all the possible key strings for each keysize length, sorted lowest to highest hamming distances
-            if len(''.join(kstring)) > 1 and score(''.join(kstring)) > max_key_score:
-                max_key_score = score(''.join(kstring))
-                key = ''.join(kstring)
+            if len(''.join(cipher_key)) > 1 and score(''.join(cipher_key)) > max_key_score:
+                max_key_score = score(''.join(cipher_key))
+                key = ''.join(cipher_key)
         
-        print(key)
-        #TODO: decrypt ciphertext
-        # print(decrypt(ciphertext, key))
-
-def normalize(pair, k):
-    distance = hamming(pair[0].decode(), pair[1].decode())
-    return distance/k
-
-def hamming(string1, string2):
-    distances = []
-
-    for i, char in enumerate(string1):
-        xbyte = bin(ord(char)^ord(string2[i]))
-        distances.append(xbyte.count('1'))
-    return (reduce(lambda a,b: a+b, distances))
-
-def to_chunks(string, k):
-    start = 0
-    # gets chunks of n-sized blocks
-    return [string[i:i+k] for i in range(0, len(string), k)]
-
-break_xor('ciphertext.txt')
+        return (key, to_plaintext(ciphertext, key))
