@@ -1,25 +1,18 @@
 import sys
+import binascii
 
 def get_XOR(file1, file2):
 
     with open(str(file1), "rb") as a, open(str(file2), "rb") as b:
 
-        xor_result = [];
+        file_a = binascii.unhexlify(a.read())
+        file_b = binascii.unhexlify(b.read())
 
-        while True:
-            a_byte = a.read(1)
-            b_byte = b.read(1)
+        xor_result = [hex(file_a[i]^file_b[i]) for i, byte in enumerate(file_a)]
 
-            if a_byte.decode() != '':
-                xbyte = int(a_byte, 16)^int(b_byte, 16)
-                res_byte = format(xbyte, 'x')
-                xor_result.append(res_byte)
-
-            if not a_byte:
-                break
     a.close()
     b.close()
    
-    return "".join(xor_result)
+    return ''.join(xor_result).replace('0x', '')
 
 
