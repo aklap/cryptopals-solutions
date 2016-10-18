@@ -3,6 +3,7 @@ from Crypto.Cipher import AES
 
 def decrypt_AES():
     plaintext = ""
+
     with open('ciphertext.txt', 'rb') as f:
         while True:
             ciphertext = base64.b64decode(f.read()).rstrip()
