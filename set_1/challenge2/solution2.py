@@ -1,6 +1,6 @@
 import sys
 
-def getXOR(file1, file2):
+def get_XOR(file1, file2):
 
     with open(str(file1), "rb") as a, open(str(file2), "rb") as b:
 

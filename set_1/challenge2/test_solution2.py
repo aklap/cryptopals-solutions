@@ -1,7 +1,7 @@
 import unittest
-from solution2 import getXOR
+from solution2 import get_XOR
 
-example = getXOR("./buffer1.txt", "./buffer2.txt")
+example = get_XOR("./buffer1.txt", "./buffer2.txt")
 
 class MyTest(unittest.TestCase):
     def test(self):
