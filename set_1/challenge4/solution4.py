@@ -11,6 +11,5 @@ def find_xor(file):
             results = [decrypt_xor(line.strip()) for line in f]
             best_match = max(results, key=lambda result: result[0])
             return (best_match)
-            break
     f.close()
 
