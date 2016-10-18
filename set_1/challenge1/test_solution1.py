@@ -8,6 +8,5 @@ class MyTest(unittest.TestCase):
     def test(self):
         self.assertEqual(example, "SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t")
 
-# run test from command line
 if __name__ == '__main__':
     unittest.main()
