@@ -1,5 +1,9 @@
 import unittest
+import sys
+sys.path.append('../challenge6')
 from solution6 import *
+sys.path.append('../helper_functions')
+from helper_functions import *
 from song import lyrics
 
 class MyTest(unittest.TestCase):

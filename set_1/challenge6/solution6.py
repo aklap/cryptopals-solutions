@@ -7,6 +7,7 @@ from solution3 import decrypt_xor
 from frequencies import score
 sys.path.append('../challenge5')
 from solution5 import xor_encrypt as to_plaintext
+sys.path.append('helper_functions/')
 from distance_functions import *
 from transform_functions import *
 
