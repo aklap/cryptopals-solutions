@@ -1,5 +1,3 @@
-import binascii
-import string
 from Crypto.Cipher import AES
 import sys
 sys.path.append('../challenge6')
