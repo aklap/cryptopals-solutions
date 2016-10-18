@@ -79,7 +79,7 @@ def find_match(results):
         result_to_string = ''.join(result)
         if score(result_to_string) > highest_score:
             highest_score = score(result_to_string)
-            winner = i
+            key = i
             plaintext = result_to_string
-    return (winner, plaintext)
+    return (highest_score, key, plaintext)
 

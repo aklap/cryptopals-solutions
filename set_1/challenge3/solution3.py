@@ -15,6 +15,7 @@ def decrypt_xor(ciphertext):
     decoded_text = binascii.unhexlify(ciphertext)
     xor_results = xor_ciphertext(decoded_text)
     match = find_match(xor_results)
-    best_key = KEYS[match[0]]
-    plaintext = match[1]
-    return (best_key, plaintext)
+    best_key = KEYS[match[1]]
+    score = match[0]
+    plaintext = match[2]
+    return (score, best_key, plaintext)
