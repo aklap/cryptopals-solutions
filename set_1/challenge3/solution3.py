@@ -1,30 +1,23 @@
-import string
-import frequencies
 import binascii
+from frequencies import find_match
+from constants import POSSIBLE_KEYS as KEYS
 
-def freq_decode(ciphertext):
+# XOR the decoded bytes to get results for every possible key, use letter frequency to find likely match
+
+def xor_bytes(text):
     results = []
-    highest_score = 0 
-    winner = ''
-    plaintext = ''
-    # decode to bytes
-    # ciphertext = binascii.unhexlify(ciphertext)
-    possible_keys = [chr(i) for i in range(0,256)]
+    for key in KEYS:
+        result = [chr(byte^ord(key)) for byte in text]
+        results.append(result)
+    return results
 
-    # XOR the decoded bytes to get results for every possible key
-    for key in possible_keys:
-        result = ''
-        for byte in ciphertext:
-            xbyte = (byte^ord(key))
-            result += (chr(xbyte))
-        results.append((key, result))
-    # examine the frequencies of results to find best scoring match
-    for i, result in enumerate(results):
-        if frequencies.score(result) > highest_score:
-            highest_score = frequencies.score(result)
-            winner = possible_keys[i]
-            plaintext = results[i][1]
-            
-    return (highest_score, winner, plaintext)
-
-
+def decrypt_xor(ciphertext):
+    try:
+        ciphertext = binascii.unhexlify(ciphertext)
+    finally:
+        xor_results = xor_bytes(ciphertext)
+        match = find_match(xor_results)
+        best_key = KEYS[match[1]]
+        score = match[0]
+        plaintext = match[2]
+        return (score, best_key, plaintext)

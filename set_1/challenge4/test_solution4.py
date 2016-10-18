@@ -1,7 +1,7 @@
 import unittest
-from solution4 import decrypt
+from solution4 import find_xor
 
-example = decrypt("4.txt")
+example = find_xor("4.txt")
 
 class MyTest(unittest.TestCase):
     def test(self):

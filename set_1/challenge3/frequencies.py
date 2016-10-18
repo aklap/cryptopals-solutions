@@ -50,13 +50,13 @@ common_initials = ['T', 'O', 'A', 'W', 'B', 'C', 'D', 'S', 'F', 'M', 'R', 'H', '
 
 def score(result):
     score = 0
-    words = result[1].split()
+    words = result.split()
     
     for word in words:
         for letter in letter_frequencies:
             if letter.lower() in word:
                 score += letter_frequencies[letter]
-        if word[0] in common_initials:
+        if word[0][0] in common_initials and word[0][0].isupper():
             score += 20
         for double in common_doubles:
             if double in word:
@@ -71,3 +71,15 @@ def score(result):
             if trigram in word:
                 score +=20
     return score
+
+# examine the frequency of each xor result to find best scoring match
+def find_match(results):
+    highest_score = 0 
+    for i, result in enumerate(results):
+        result_to_string = ''.join(result)
+        if score(result_to_string) > highest_score:
+            highest_score = score(result_to_string)
+            key = i
+            plaintext = result_to_string
+    return (highest_score, key, plaintext)
+
