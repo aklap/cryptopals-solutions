@@ -1,18 +1,11 @@
-import sys
-import binascii
-
 def get_XOR(file1, file2):
+    """Given 2 strings, hex decode both and then XOR them, returning hex."""
+    with open(file1) as a, open(file2) as b:
 
-    with open(str(file1), "rb") as a, open(str(file2), "rb") as b:
+        a = bytes.fromhex(a.read())
+        b = bytes.fromhex(b.read())
+        # Use format specific mini language, 'x', to remove prefix
+        # https: // docs.python.org/3/library/functions.html
+        xor = ['%x' % (a[i] ^ b[i]) for i, byte in enumerate(a)]
 
-        file_a = binascii.unhexlify(a.read())
-        file_b = binascii.unhexlify(b.read())
-
-        xor_result = [hex(file_a[i]^file_b[i]) for i, byte in enumerate(file_a)]
-
-    a.close()
-    b.close()
-   
-    return ''.join(xor_result).replace('0x', '')
-
-
+        return ''.join(xor)
