@@ -1,15 +1,16 @@
 import sys
 sys.path.append('../challenge3')
-from solution3 import decrypt_xor
+from solution3 import xor_bytes
+from frequencies import *
+import binascii
 
-# save all the high scores and then get the max score to find winning string
 
 def find_xor(file):
-    with open(str(file), "rb") as f:
+    """Find encrypted string in file."""
+    with open(file) as f:
+        text_bytes = binascii.unhexlify(line.strip())
+        xor_results = [xor_bytes(text_bytes) for line in f]
+        scored = [find_match(res) for res in xor_results]
+        best_match = max(scored, key=lambda result: result[0])
 
-        while True:
-            results = [decrypt_xor(line.strip()) for line in f]
-            best_match = max(results, key=lambda result: result[0])
-            return (best_match)
-    f.close()
-
+        return best_match[2]
