@@ -9,9 +9,9 @@ def xor_encrypt(text, key_string):
     # Convert plaintext to bytearray
     text = bytearray(text, 'utf-8')
     # Decrypt with key, rotating
-    return xor_repeat(text, key, 'hex')
+    return xor_repeat(text, key)
 
-def xor_repeat(bytes_text, key, type):
+def xor_repeat(bytes_text, key):
     """Repeat XOR decryption for text."""
     ciphertext = ''
 
